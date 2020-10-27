@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<div th:if="${not #lists.isEmpty(search)}" style="width: 40%">
+    <table class="table table-striped">
+        <tr>
+            <th>ИНН</th>
+            <th>ОГРН</th>
+            <th>Название</th>
+            <th>Адрес</th>
+        </tr>
+        <tr th:each="company: ${search}">
+            <td th:text="${company.INN}">INN</td>
+            <td th:text="${company.OGRN}">OGRN</td>
+            <td th:text="${company.name}">name</td>
+            <td th:text="${company.address}">address</td>
+
+        </tr>
+    </table>
+</div>
+
+<form th:object="${company}" th:action="@{/search}" method="get">
+    <div class="form-row" style="width:50%">
+        <div class="form-group col-md-6">
+            <select name="field" class="custom-select">
+                <option th:value="'name'" th:text="Название"></option>
+                <option th:value="'address'" th:text="Адрес"></option>
+                <option th:value="'INN'" th:text="ИНН"></option>
+                <option th:value="'OGRN'" th:text="ОГРН"></option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <input type="text" name="query" class="form-control" placeholder="содержит" id="search-input"/>
+        </div>
+        <div class="form-group col-md-6">
+            <button type="submit" class="btn btn-primary">Поиск</button>
+        </div>
+    </div>
+</form>
+</div>
+<div class="form-row">
+    <p>
+        <a class="btn btn-primary" href="/">Главная</a>
+        <a class="btn btn-primary" href="/add">Добавить</a>
+    </p>
+</div>
+</body>
+</html>
